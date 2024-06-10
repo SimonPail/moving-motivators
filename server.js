@@ -8,7 +8,7 @@ const port = 3001;
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
 
-const activeSessions = new Set();
+const activeSessions = new Map();
 
 app.prepare().then(() => {
  const httpServer = createServer(handler);
@@ -19,7 +19,7 @@ app.prepare().then(() => {
 
   socket.on("create-session", (id) => {
    sessionId = id;
-   activeSessions.add(sessionId);
+   activeSessions.set(sessionId, []);
    console.log(`Session created: ${sessionId}`);
   });
 
@@ -29,10 +29,13 @@ app.prepare().then(() => {
     callback("Invalid session");
     return;
    }
-
    socket.join(sessionId);
    console.log(`Client joined session: ${sessionId}`);
    callback();
+
+   // Send current items state to the newly joined client
+   const currentItems = activeSessions.get(sessionId);
+   socket.emit("items-updated", currentItems);
   });
 
   socket.on("move-card", (data) => {
@@ -42,7 +45,10 @@ app.prepare().then(() => {
   });
 
   socket.on("update-items", (newItemsOrder) => {
-   socket.broadcast.emit("items-updated", newItemsOrder);
+   if (sessionId) {
+    activeSessions.set(sessionId, newItemsOrder);
+    socket.to(sessionId).emit("items-updated", newItemsOrder);
+   }
   });
 
   socket.on("disconnect", () => {
