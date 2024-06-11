@@ -12,9 +12,9 @@ git clone https://github.com/ExtiaRomania/moving-motivators.git
 
 2. Install dependencies:
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 3. Start the development server:
 
