@@ -48,7 +48,7 @@ export default function VerticalInfiniteCarroussel() {
  }, []);
 
  return (
-  <div className="h-screen overflow-y-hidden whitespace-nowrap max-w-[250px]">
+  <div className="hidden sm:block h-screen overflow-y-hidden whitespace-nowrap max-w-[250px] px-5">
    <motion.div
     className="flex flex-col space-y-4"
     variants={variants}

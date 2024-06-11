@@ -9,6 +9,7 @@ import { arrayMoveImmutable } from "array-move";
 import GameGrid from "@/components/game-grid";
 import Loader from "@/components/loader";
 import LiveSessionNotFound from "@/components/live-session-not-found";
+import ButtonHome from "@/components/button-home";
 
 export default function LivePage() {
  const router = useRouter();
@@ -72,18 +73,21 @@ export default function LivePage() {
      {errorSession ? (
       <LiveSessionNotFound />
      ) : (
-      <div className="relative bg-white rounded-2xl p-6 drop-shadow-md">
-       <div className="w-full">
-        <GameGrid items={items}></GameGrid>
+      <div className="my-auto">
+       <ButtonHome className="mr-auto text-white" />
+       <div className="relative bg-white rounded-2xl p-6 drop-shadow-md">
+        <div className="w-full">
+         <GameGrid items={items}></GameGrid>
+        </div>
+        <SortableList
+         onSortEnd={onSortEnd}
+         className="absolute top-0 left-0 w-full p-6 grid grid-cols-3 lg:grid-cols-4 gap-4"
+         draggedItemClassName="dragged">
+         {items.map((item, index) => (
+          <GameItem key={`${item.name}`} item={item} />
+         ))}
+        </SortableList>
        </div>
-       <SortableList
-        onSortEnd={onSortEnd}
-        className="absolute top-0 left-0 w-full p-6 grid grid-cols-4 gap-4"
-        draggedItemClassName="dragged">
-        {items.map((item, index) => (
-         <GameItem key={`${item.name}`} item={item} />
-        ))}
-       </SortableList>
       </div>
      )}
     </>

@@ -12,7 +12,7 @@ export default function GameGrid({ items }: { items?: GameItem[] }) {
   }
  }, [items]);
  return (
-  <div className="grid grid-cols-4 gap-4">
+  <div className="grid grid-cols-3 lg:grid-cols-4 gap-4">
    {Array.from({ length: cards }).map((_, index) => (
     <div
      key={index}
