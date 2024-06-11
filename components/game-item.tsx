@@ -16,7 +16,6 @@ export default function GameItem({ item }: { item: GameItem }) {
  const childRef = useRef<HTMLDivElement>(null);
 
  const [delta, setDelta] = useState(0);
- const [isDragging, setIsDragging] = useState(false);
 
  const controls = useAnimation();
  const y = useMotionValue(0);
@@ -30,6 +29,12 @@ export default function GameItem({ item }: { item: GameItem }) {
 
    setDelta(delta);
    y.set(0);
+  }
+ }, []);
+
+ useEffect(() => {
+  if (item.y) {
+   moveItem(item.y);
   }
  }, []);
 
@@ -57,7 +62,6 @@ export default function GameItem({ item }: { item: GameItem }) {
  };
 
  const onDragEnd = (event: any, info: any) => {
-  setIsDragging(false);
   const deltaMin = delta / 3;
 
   let newY = 0;
@@ -73,8 +77,10 @@ export default function GameItem({ item }: { item: GameItem }) {
  };
 
  const reinitPos = () => {
-  moveItem(0);
-  socket.emit("move-card", { name: item.name, y: 0 });
+  if (y.get() !== 0) {
+   moveItem(0);
+   socket.emit("move-card", { name: item.name, y: 0 });
+  }
  };
 
  return (

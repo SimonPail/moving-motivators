@@ -31,16 +31,25 @@ app.prepare().then(() => {
    }
    socket.join(sessionId);
    console.log(`Client joined session: ${sessionId}`);
-   callback();
 
-   // Send current items state to the newly joined client
    const currentItems = activeSessions.get(sessionId);
-   socket.emit("items-updated", currentItems);
+   callback(null, currentItems);
   });
 
   socket.on("move-card", (data) => {
    if (sessionId) {
     socket.to(sessionId).emit("card-moved", data);
+
+    const items = activeSessions.get(sessionId);
+    activeSessions.set(
+     sessionId,
+     items.map((item) => {
+      if (data.name === item.name) {
+       item.y = data.y;
+      }
+      return item;
+     })
+    );
    }
   });
 

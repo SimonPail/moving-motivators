@@ -22,20 +22,25 @@ export default function LivePage() {
 
  useEffect(() => {
   if (sessionIdParams) {
-   socket.emit("join-session", sessionIdParams, (error?: string) => {
-    if (error) {
-     setErrorSession(true);
-     setLoading(false);
-     return;
+   socket.emit(
+    "join-session",
+    sessionIdParams,
+    (error: string, data: GameItem[]) => {
+     if (error) {
+      setErrorSession(true);
+      setLoading(false);
+      return;
+     }
+
+     if (data.length) {
+      setItems(data);
+     } else {
+      initItems();
+     }
     }
-   });
+   );
    socket.on("items-updated", (newItems: GameItem[]) => {
-    if (newItems.length) {
-     setItems(newItems);
-    } else {
-     //First init
-     fetchItems();
-    }
+    setItems(newItems);
    });
   }
 
@@ -50,10 +55,11 @@ export default function LivePage() {
   }
  }, [items]);
 
- async function fetchItems() {
+ async function initItems() {
   const res = await fetch("/api/cards-game");
   const result: GameItem[] = await res.json();
   setItems(result);
+  socket.emit("update-items", result);
  }
 
  const onSortEnd = (oldIndex: number, newIndex: number) => {
