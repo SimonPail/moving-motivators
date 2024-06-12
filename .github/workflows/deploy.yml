@@ -1,0 +1,49 @@
+name: Deploy 
+
+on:
+ workflow_dispatch:
+  inputs:
+   branch:
+    description: "Deploy"
+    required: true
+    default: "main"
+
+jobs:
+ build:
+  runs-on: ubuntu-latest
+  timeout-minutes: 30
+  steps:
+   - name: Setup Node.js
+     uses: actions/setup-node@v4
+     with:
+      node-version: 20
+      
+   - name: Checkout code
+     uses: actions/checkout@v3
+
+   - name: Install rsync
+     run: sudo apt-get install rsync
+
+   - name: Deploy on server
+     uses: Pendect/action-rsyncer@v1.1.0
+     env:
+      DEPLOY_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+     with:
+      flags: "-avc --exclude=.git --exclude=.gitignore --exclude=.env --exclude=.env.test --exclude=.github --update"
+      src: "./"
+      dest: 'root@"${{secrets.HOST}}":/root/moving-motivators'
+
+   - name: Install dependencies and build on VPS
+     uses: appleboy/ssh-action@v1.0.3
+     with:
+       host: ${{ secrets.HOST }}
+       username: ${{ secrets.USERNAME }}
+       key: ${{ secrets.SSH_PRIVATE_KEY }}
+       script: |
+         export NVM_DIR=~/.nvm
+         source ~/.nvm/nvm.sh
+         nvm use 21.7.1
+         cd moving-motivators
+         npm install 
+         npm run build
+         pm2 restart moving-motivators
