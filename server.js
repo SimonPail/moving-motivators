@@ -17,12 +17,14 @@ app.prepare().then(() => {
  io.on("connection", (socket) => {
   let sessionId;
 
+  // CREATE SESSION
   socket.on("create-session", (id) => {
    sessionId = id;
    activeSessions.set(sessionId, []);
    console.log(`Session created: ${sessionId}`);
   });
 
+  // JOIN SESSION
   socket.on("join-session", (id, callback) => {
    sessionId = id;
    if (!activeSessions.has(sessionId)) {
@@ -32,10 +34,22 @@ app.prepare().then(() => {
    socket.join(sessionId);
    console.log(`Client joined session: ${sessionId}`);
 
+   const room = io.sockets.adapter.rooms.get(sessionId);
+   const userCount = room ? room.size : 0;
+   socket.to(sessionId).emit("user-count", userCount);
+
    const currentItems = activeSessions.get(sessionId);
    callback(null, currentItems);
   });
 
+  // GET USER COUNT
+  socket.on("get-user-count", (callback) => {
+   const room = io.sockets.adapter.rooms.get(sessionId);
+   const userCount = room ? room.size : 0;
+   callback(userCount);
+  });
+
+  // MOOVE CARD
   socket.on("move-card", (data) => {
    if (sessionId) {
     socket.to(sessionId).emit("card-moved", data);
@@ -53,6 +67,7 @@ app.prepare().then(() => {
    }
   });
 
+  // UPDATE ITEMS
   socket.on("update-items", (newItemsOrder) => {
    if (sessionId) {
     activeSessions.set(sessionId, newItemsOrder);
@@ -60,8 +75,15 @@ app.prepare().then(() => {
    }
   });
 
+  // DISCONECT
   socket.on("disconnect", () => {
    console.log("Client disconnected");
+
+   if (sessionId) {
+    const room = io.sockets.adapter.rooms.get(sessionId);
+    const userCount = room ? room.size : 0;
+    socket.to(sessionId).emit("user-count", userCount);
+   }
   });
  });
 

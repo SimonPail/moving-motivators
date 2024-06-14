@@ -9,7 +9,7 @@ import { arrayMoveImmutable } from "array-move";
 import GameGrid from "@/components/game-grid";
 import Loader from "@/components/loader";
 import LiveSessionNotFound from "@/components/live-session-not-found";
-import ButtonHome from "@/components/button-home";
+import LiveNavigation from "@/components/live-navigation";
 
 export default function LivePage() {
  const router = useRouter();
@@ -80,7 +80,7 @@ export default function LivePage() {
       <LiveSessionNotFound />
      ) : (
       <div className="my-auto">
-       <ButtonHome className="mr-auto text-white" />
+       <LiveNavigation />
        <div className="relative bg-white rounded-2xl p-6 drop-shadow-md">
         <div className="w-full">
          <GameGrid items={items}></GameGrid>
