@@ -31,7 +31,7 @@ jobs:
      with:
       flags: "-avc --exclude=.git --exclude=.gitignore --exclude=.env --exclude=.env.test --exclude=.github --update"
       src: "./"
-      dest: 'root@"${{secrets.HOST}}":/root/moving-motivators'
+      dest: 'extia@"${{secrets.HOST}}":/home/extia/moving-motivators'
 
    - name: Install dependencies and build on VPS
      uses: appleboy/ssh-action@v1.0.3
