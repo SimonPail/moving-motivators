@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
-import { useDictionary } from "../dictionary-provider";
+import { useDictionary } from "@/providers/dictionary";
 
 export default function NotFound() {
  const { dictionary } = useDictionary();

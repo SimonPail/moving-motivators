@@ -25,7 +25,7 @@ import { nanoid } from "nanoid";
 import { socket } from "@/socket";
 import { Button } from "@/components/ui/button";
 import ClipboardButton from "@/components/clipboard-button";
-import { useDictionary } from "@/app/dictionary-provider";
+import { useDictionary } from "@/providers/dictionary";
 
 export default function HomeButton() {
  const [sessionUrl, setSessionUrl] = useState<string>("");

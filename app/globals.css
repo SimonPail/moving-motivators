@@ -2,18 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+ font-family: "GothamBook";
+ src: url("/fonts/GothamBook.otf") format("opentype");
+}
+
+@font-face {
+ font-family: "MontHeavy";
+ src: url("/fonts/MontHeavy.otf") format("opentype");
+}
+
 @import "../styles/loader.css";
 
 @layer base {
  @layer base {
   :root {
+   --primary: 18.6 96.6% 65.9%;
    --background: 0 0% 100%;
+   --primary-foreground: 210 40% 98%;
    --foreground: 222.2 84% 4.9%;
    --card: 0 0% 100%;
    --card-foreground: 222.2 84% 4.9%;
    --popover: 0 0% 100%;
    --popover-foreground: 222.2 84% 4.9%;
-   --primary: 221.2 83.2% 53.3%;
    --primary-foreground: 210 40% 98%;
    --secondary: 210 40% 96.1%;
    --secondary-foreground: 222.2 47.4% 11.2%;
@@ -29,14 +40,16 @@
    --radius: 1rem;
   }
 
-  .dark {
-   --background: 222.2 84% 4.9%;
+  [data-theme="engineering"] {
+   --primary: 50.1 100% 50%;
+   --background: 200 26.8% 22%;
+   --primary-foreground: 222.2 47.4% 11.2%;
    --foreground: 210 40% 98%;
    --card: 222.2 84% 4.9%;
    --card-foreground: 210 40% 98%;
    --popover: 222.2 84% 4.9%;
    --popover-foreground: 210 40% 98%;
-   --primary: 217.2 91.2% 59.8%;
+   --primary: 50.1 100% 50%;
    --primary-foreground: 222.2 47.4% 11.2%;
    --secondary: 217.2 32.6% 17.5%;
    --secondary-foreground: 210 40% 98%;

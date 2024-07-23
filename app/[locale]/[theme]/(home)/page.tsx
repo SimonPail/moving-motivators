@@ -1,22 +1,23 @@
 import HomeCards from "@/components/home-cards";
 import HomeButton from "@/components/home-button";
 import AppLogo from "@/components/app-logo";
-import { getDictionary } from "../dictionaries";
+import { getDictionary } from "@/lib/dictionaries";
 import { Locale } from "@/types/locale";
-import LocalSwitch from "@/components/locale-switch";
+import LocalSwitcher from "@/components/locale-switcher";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 interface HomeProps {
- params: { lang: Locale };
+ params: { locale: Locale; theme: Theme };
 }
 
-export default async function Home({ params: { lang } }: HomeProps) {
- const { home } = await getDictionary(lang);
+export default async function Home({ params: { locale, theme } }: HomeProps) {
+ const { home } = await getDictionary(locale);
 
  return (
   <main className="flex-1 flex items-center space-x-24 justify-center">
    <div className="w-full max-w-xl px-4 flex-1 h-screen flex flex-col justify-center">
     <div className="flex-1 flex flex-col justify-center">
-     <AppLogo client={"it"} className="mb-10" />
+     <AppLogo theme={theme} className="mb-10" />
      <h1 className="text-6xl font-montheavy mb-2 max-w-[400px]">
       {home.title}
      </h1>
@@ -28,8 +29,9 @@ export default async function Home({ params: { lang } }: HomeProps) {
       <p className="text-sm text-slate-500 mt-6">{home.hint}</p>
      </div>
     </div>
-    <div className="py-4">
-     <LocalSwitch />
+    <div className="py-4 flex justify-between items-center w-full">
+     <LocalSwitcher />
+     <ThemeSwitcher />
     </div>
    </div>
 

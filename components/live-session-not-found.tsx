@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
-import { useDictionary } from "@/app/dictionary-provider";
+import { useDictionary } from "@/providers/dictionary";
 
 export default function LiveSessionNotFound() {
  const { dictionary } = useDictionary();

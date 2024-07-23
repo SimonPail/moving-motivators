@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Icon from "./ui/icon";
-import { useDictionary } from "@/app/dictionary-provider";
+import { useDictionary } from "@/providers/dictionary";
 
 export default function ClipboardButton({ url }: { url: string }) {
  const [copied, setCopied] = useState<boolean>(false);

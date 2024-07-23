@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import Icon from "./ui/icon";
 import { cn } from "@/lib/utils";
-import { useDictionary } from "@/app/dictionary-provider";
+import { useDictionary } from "@/providers/dictionary";
 
 export default function ButtonHome({ className }: { className?: string }) {
  const router = useRouter();

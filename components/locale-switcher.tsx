@@ -10,27 +10,23 @@ import {
  SelectTrigger,
  SelectValue,
 } from "@/components/ui/select";
-import { useDictionary } from "@/app/dictionary-provider";
+import { useDictionary } from "@/providers/dictionary";
 import { locales } from "@/i18n";
 import { usePathname, useRouter } from "next/navigation";
+import { Locale } from "@/types/locale";
 
-export default function LocalSwitch() {
+export default function LocalSwitcher() {
  const { locale } = useDictionary();
  const router = useRouter();
  const pathname = usePathname();
 
  function handleOnSelect(newLocale: string) {
-  const currentPathname = pathname;
-
-  const pathnameWithoutLocale = locales.some((locale) =>
-   currentPathname.startsWith(`/${locale}`)
-  )
-   ? currentPathname.slice(3) // Remove first 3 characters (e.g., '/en', '/fr')
-   : currentPathname;
-
-  const newPath = `/${newLocale}${pathnameWithoutLocale}`;
+  const parts = pathname.split("/");
+  parts[1] = newLocale;
 
   setCookie("NEXT_LOCALE", newLocale);
+
+  const newPath = parts.join("/");
   router.push(newPath);
  }
 

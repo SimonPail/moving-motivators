@@ -2,16 +2,16 @@ import Image from "next/image";
 import React from "react";
 
 interface AppLogoProps extends React.HTMLAttributes<HTMLDivElement> {
- client: Client;
+ theme: Theme;
 }
 
-export default function AppLogo({ client, className }: AppLogoProps) {
+export default function AppLogo({ theme, className }: AppLogoProps) {
  return (
   <Image
-   src={`/images/${client}/logo_header.svg`}
+   src={`/images/${theme}/logo_header.svg`}
    width={60}
    height={60}
-   alt={client}
+   alt={theme}
    className={className}
   />
  );

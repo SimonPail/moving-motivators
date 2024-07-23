@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "../globals.css";
+import "@/app/globals.css";
 import { cn } from "@/lib/utils";
 import { Locale } from "@/types/locale";
 import { locales } from "@/i18n";
-import { getDictionary } from "./dictionaries";
-import DictionaryProvider from "../dictionary-provider";
-
-const inter = Poppins({ weight: "500", subsets: ["latin"] });
+import { getDictionary } from "@/lib/dictionaries";
+import DictionaryProvider from "@/providers/dictionary";
+import { ThemeProvider } from "next-themes";
 
 export async function generateStaticParams() {
  const staticParams = locales.map((locale) => {
@@ -23,21 +22,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
  children,
- params: { lang },
+ params: { locale },
 }: Readonly<{
  children: React.ReactNode;
- params: { lang: Locale };
+ params: { locale: Locale };
 }>) {
- const dictionary = await getDictionary(lang);
+ const dictionary = await getDictionary(locale);
 
  return (
-  <html lang={lang}>
+  <html lang={locale} suppressHydrationWarning>
    <body
-    className={cn(
-     "min-h-screen bg-background antialiased min-w-[350px] font-gothambook"
-    )}>
-    <DictionaryProvider dictionary={dictionary} locale={lang}>
-     {children}
+    className={cn("min-h-screen antialiased min-w-[350px] font-gothambook")}>
+    <DictionaryProvider dictionary={dictionary} locale={locale}>
+     <ThemeProvider>{children}</ThemeProvider>
     </DictionaryProvider>
    </body>
   </html>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Locale } from "@/types/locale";
-import { getDictionary } from "./[lang]/dictionaries";
+import { getDictionary } from "@/lib/dictionaries";
 import { useContext, createContext, ReactNode } from "react";
 
 type Dictionary = Awaited<ReturnType<typeof getDictionary>>;
