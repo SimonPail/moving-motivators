@@ -79,9 +79,9 @@ export default function LivePage() {
      {errorSession ? (
       <LiveSessionNotFound />
      ) : (
-      <div className="my-auto">
+      <div className="my-auto p-3">
        <LiveNavigation />
-       <div className="relative bg-white rounded-2xl p-6 drop-shadow-md">
+       <div className="relative bg-white rounded-2xl p-6 drop-shadow-lg">
         <div className="w-full">
          <GameGrid items={items}></GameGrid>
         </div>

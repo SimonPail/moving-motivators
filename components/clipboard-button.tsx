@@ -3,9 +3,12 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Icon from "./ui/icon";
+import { useDictionary } from "@/app/dictionary-provider";
 
 export default function ClipboardButton({ url }: { url: string }) {
  const [copied, setCopied] = useState<boolean>(false);
+ const { dictionary } = useDictionary();
+
  const copyUrlToClipboard = () => {
   const tempInput = document.createElement("input");
   tempInput.value = url;
@@ -23,7 +26,7 @@ export default function ClipboardButton({ url }: { url: string }) {
  return (
   <>
    {copied ? (
-    <span className=" text-xs text-slate-600">copied !</span>
+    <span className=" text-xs text-slate-600">{dictionary.buttonCopied}</span>
    ) : (
     <Button
      variant="ghost"

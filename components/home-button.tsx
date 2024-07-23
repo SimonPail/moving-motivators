@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
  DropdownMenu,
@@ -8,13 +10,10 @@ import {
 
 import {
  Dialog,
- DialogClose,
  DialogContent,
  DialogDescription,
- DialogFooter,
  DialogHeader,
  DialogTitle,
- DialogTrigger,
 } from "@/components/ui/dialog";
 
 import { Input } from "@/components/ui/input";
@@ -26,13 +25,14 @@ import { nanoid } from "nanoid";
 import { socket } from "@/socket";
 import { Button } from "@/components/ui/button";
 import ClipboardButton from "@/components/clipboard-button";
+import { useDictionary } from "@/app/dictionary-provider";
 
 export default function HomeButton() {
  const [sessionUrl, setSessionUrl] = useState<string>("");
  const [openDialog, setOpenDialog] = useState<boolean>(false);
+ const { dictionary } = useDictionary();
 
  async function createLiveSession() {
-  console.log("createLiveSession");
   const sessionId = nanoid(5);
   socket.emit("create-session", sessionId);
   return `${window.location.origin}/live?sessionId=${sessionId}`;
@@ -53,16 +53,18 @@ export default function HomeButton() {
   <>
    <DropdownMenu>
     <DropdownMenuTrigger className="outlined-none" asChild>
-     <Button>Create Live Session</Button>
+     <Button size="lg" className="shadow-md">
+      {dictionary.home.buttonCreateSession}
+     </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent>
      <DropdownMenuItem onClick={createForLater}>
       <Icon name="Link2" className="w-5 mr-2" />
-      Get link for Later
+      {dictionary.home.buttonCreateLater}
      </DropdownMenuItem>
      <DropdownMenuItem onClick={startSession}>
       <Icon name="Plus" className="w-5 mr-2" />
-      Start a session
+      {dictionary.home.buttonCreateNow}
      </DropdownMenuItem>
     </DropdownMenuContent>
    </DropdownMenu>
@@ -70,9 +72,9 @@ export default function HomeButton() {
    <Dialog open={openDialog} onOpenChange={() => setOpenDialog(false)}>
     <DialogContent className="sm:max-w-md">
      <DialogHeader>
-      <DialogTitle>Share link</DialogTitle>
+      <DialogTitle>{dictionary.home.modalShare.title}</DialogTitle>
       <DialogDescription>
-       Share the link to the users you want to invite to the session.
+       {dictionary.home.modalShare.description}
       </DialogDescription>
      </DialogHeader>
      <div className="flex items-center justify-between space-x-4">

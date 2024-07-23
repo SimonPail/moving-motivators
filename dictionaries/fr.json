@@ -1,0 +1,28 @@
+{
+ "home": {
+  "title": "Moving Motivators",
+  "description": "Utilisez cet outil interactif pour découvrir les valeurs personnelles et comment elles influencent la performance et la satisfaction au travail.",
+  "hint": "Démarrez une nouvelle session et engagez-vous avec les candidats ou les membres de l'équipe de manière significative.",
+  "buttonCreateSession": "Créer une session",
+  "buttonCreateLater": "Obtenir le lien pour plus tard",
+  "buttonCreateNow": "Démarrer une session",
+  "modalShare": {
+   "title": "Partager le lien",
+   "description": "Partagez le lien avec les utilisateurs que vous souhaitez inviter à la session."
+  }
+ },
+ "live": {
+  "notFound": {
+   "title": "Session non trouvée",
+   "description": "Oups! La session que vous recherchez n'existe pas.",
+   "button": "Créer une nouvelle session"
+  }
+ },
+ "notFound": {
+  "title": "404 - Page non trouvée",
+  "description": "Oups! La page que vous recherchez n'existe pas.",
+  "button": "Retourner à l'accueil"
+ },
+ "buttonHome": "Accueil",
+ "buttonCopied": "Copié !"
+}

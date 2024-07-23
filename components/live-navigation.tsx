@@ -19,8 +19,8 @@ export default function LiveNavigation() {
  }, []);
 
  return (
-  <div className="flex justify-between items-center">
-   <ButtonHome className="text-white" />
+  <div className="flex justify-between items-center text-primary">
+   <ButtonHome className="" />
    <div className="flex items-center space-x-2 mr-4">
     <Icon name="UsersRound" className=" w-5 h-5" />{" "}
     <span>{connectedUsers}</span>
