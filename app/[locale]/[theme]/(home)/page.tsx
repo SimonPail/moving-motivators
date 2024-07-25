@@ -26,7 +26,7 @@ export default async function Home({ params: { locale, theme } }: HomeProps) {
       <div>
        <HomeButton />
       </div>
-      <p className="text-sm text-slate-500 mt-6">{home.hint}</p>
+      <p className="text-sm text-foreground mt-6">{home.hint}</p>
      </div>
     </div>
     <div className="py-4 flex justify-between items-center w-full">
@@ -35,7 +35,7 @@ export default async function Home({ params: { locale, theme } }: HomeProps) {
     </div>
    </div>
 
-   <div className="basis-1/5">
+   <div className="basis-1/5 hidden lg:block">
     <HomeCards />
    </div>
   </main>

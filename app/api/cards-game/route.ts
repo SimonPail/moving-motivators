@@ -3,6 +3,13 @@ import path, { basename, extname } from "path";
 import fs from "fs/promises";
 
 export async function GET(request: NextRequest, response: NextResponse) {
+ const searchParams = request.nextUrl.searchParams;
+ const locale = searchParams.get("locale");
+ const theme = searchParams.get("theme");
+
+ // TODO: Make adapted request
+ console.log({ locale, theme });
+
  try {
   const assetsDirectory = path.join(process.cwd(), "/public/images/stickers");
   const files = await fs.readdir(assetsDirectory);

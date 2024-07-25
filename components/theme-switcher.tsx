@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
 import { setCookie } from "cookies-next";
 import { useTheme } from "next-themes";
+import { Cog, Computer } from "lucide-react";
 
 export function ThemeSwitcher() {
  const router = useRouter();
@@ -15,7 +16,6 @@ export function ThemeSwitcher() {
  useEffect(() => {
   const parts = pathname.split("/");
   const themeRouter = parts[2] as Theme;
-  console.log(themeRouter);
   setTheme(themeRouter);
   setIsChecked(themeRouter === "engineering");
  }, []);
@@ -35,11 +35,13 @@ export function ThemeSwitcher() {
  };
 
  return (
-  <div>
+  <div className="flex space-x-3">
+   <Computer className="h-6 w-6" />
    <Switch
     checked={isChecked}
     onCheckedChange={(value) => toggleTheme(value)}
    />
+   <Cog className="h-6 w-6" />
   </div>
  );
 }
