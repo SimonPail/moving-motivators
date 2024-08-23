@@ -26,7 +26,7 @@ export default function ClipboardButton({ url }: { url: string }) {
  return (
   <>
    {copied ? (
-    <span className=" text-xs text-slate-600">{dictionary.buttonCopied}</span>
+    <span className=" text-xs text-foreground">{dictionary.buttonCopied}</span>
    ) : (
     <Button
      variant="ghost"

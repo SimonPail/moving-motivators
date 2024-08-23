@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { socket } from "@/socket";
-import { useRouter, useSearchParams } from "next/navigation";
+import {
+ notFound,
+ usePathname,
+ useRouter,
+ useSearchParams,
+} from "next/navigation";
 import GameItem from "@/components/game-item";
 import SortableList from "react-easy-sort";
 import { arrayMoveImmutable } from "array-move";
@@ -10,11 +15,13 @@ import GameGrid from "@/components/game-grid";
 import Loader from "@/components/loader";
 import LiveSessionNotFound from "@/components/live-session-not-found";
 import LiveNavigation from "@/components/live-navigation";
+import { fetchCardsGame } from "@/lib/cardGameHelpers";
 
 export default function LivePage() {
  const router = useRouter();
  const searchParams = useSearchParams();
  const sessionIdParams = searchParams.get("sessionId");
+ const pathname = usePathname();
 
  const [items, setItems] = useState<GameItem[]>([]);
  const [loading, setLoading] = useState<boolean>(true);
@@ -42,6 +49,8 @@ export default function LivePage() {
    socket.on("items-updated", (newItems: GameItem[]) => {
     setItems(newItems);
    });
+  } else {
+   notFound();
   }
 
   return () => {
@@ -56,8 +65,7 @@ export default function LivePage() {
  }, [items]);
 
  async function initItems() {
-  const res = await fetch("/api/cards-game");
-  const result: GameItem[] = await res.json();
+  const result = await fetchCardsGame(pathname);
   setItems(result);
   socket.emit("update-items", result);
  }

@@ -26,16 +26,18 @@ import { socket } from "@/socket";
 import { Button } from "@/components/ui/button";
 import ClipboardButton from "@/components/clipboard-button";
 import { useDictionary } from "@/providers/dictionary";
+import { usePathname } from "next/navigation";
 
 export default function HomeButton() {
  const [sessionUrl, setSessionUrl] = useState<string>("");
  const [openDialog, setOpenDialog] = useState<boolean>(false);
  const { dictionary } = useDictionary();
+ const pathname = usePathname();
 
  async function createLiveSession() {
   const sessionId = nanoid(5);
   socket.emit("create-session", sessionId);
-  return `${window.location.origin}/live?sessionId=${sessionId}`;
+  return `${window.location.href}/live?sessionId=${sessionId}`;
  }
 
  async function startSession() {

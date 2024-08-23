@@ -8,10 +8,12 @@ import {
  CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { fetchCardsGame } from "@/lib/cardGameHelpers";
+import { usePathname } from "next/navigation";
 
 const CardItem = ({ item }: { item: GameItem }) => {
  return (
-  <div className="rounded-[55px] drop-shadow-lg h-full aspect-square">
+  <div className="rounded-lg drop-shadow-lg h-full aspect-square overflow-hidden">
    <Image
     alt={item.name}
     src={item.path}
@@ -27,15 +29,15 @@ const CardItem = ({ item }: { item: GameItem }) => {
 export default function VerticalInfiniteCarroussel() {
  const [items, setItems] = useState<GameItem[]>([]);
  const plugin = useRef(Autoplay({ delay: 4000 }));
+ const pathname = usePathname();
 
  useEffect(() => {
   async function fetchStickers() {
-   const res = await fetch("/api/cards-game");
-   const result: GameItem[] = await res.json();
+   const result = await fetchCardsGame(pathname);
    setItems(result);
   }
   fetchStickers();
- }, []);
+ }, [pathname]);
 
  return (
   <Carousel
@@ -46,7 +48,7 @@ export default function VerticalInfiniteCarroussel() {
     align: "start",
     loop: true,
    }}>
-   <CarouselContent className="-mt-1 h-screen">
+   <CarouselContent className="-mt-1 h-screen min-w-[222px]">
     {items.map((item, index) => (
      <CarouselItem key={index} className="basis-1/4 flex">
       <CardItem item={item} />

@@ -7,6 +7,5 @@ const dictionaries = {
 };
 
 export const getDictionary = async (locale: Locale) => {
- console.log({ locale });
  return dictionaries[locale]();
 };

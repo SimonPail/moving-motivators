@@ -32,7 +32,9 @@ export default async function RootLayout({
  return (
   <html lang={locale} suppressHydrationWarning>
    <body
-    className={cn("min-h-screen antialiased min-w-[350px] font-gothambook")}>
+    className={cn(
+     "min-h-screen antialiased min-w-[350px] font-gothambook bg-gradient-to-br from-primarybackground/80 via-primarybackground/95 to-primarybackground"
+    )}>
     <DictionaryProvider dictionary={dictionary} locale={locale}>
      <ThemeProvider>{children}</ThemeProvider>
     </DictionaryProvider>

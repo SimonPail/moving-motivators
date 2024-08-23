@@ -34,7 +34,7 @@ export default function LocalSwitcher() {
   <div className="flex items-center">
    <Select onValueChange={(value) => handleOnSelect(value)}>
     <SelectTrigger className="w-auto border-0 outline-none focus:outline-none focus:ring-0 focus:ring-offset-0">
-     <Languages className="w-4 h-4 mr-2"></Languages>
+     <Languages className="w-6 h-6 mr-2"></Languages>
      <SelectValue placeholder={locale.toUpperCase()} />
     </SelectTrigger>
     <SelectContent>
