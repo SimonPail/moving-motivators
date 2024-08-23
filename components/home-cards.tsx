@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 
 const CardItem = ({ item }: { item: GameItem }) => {
  return (
-  <div className="rounded-[55px] drop-shadow-lg h-full aspect-square">
+  <div className="rounded-lg drop-shadow-lg h-full aspect-square overflow-hidden">
    <Image
     alt={item.name}
     src={item.path}
@@ -37,7 +37,7 @@ export default function VerticalInfiniteCarroussel() {
    setItems(result);
   }
   fetchStickers();
- }, []);
+ }, [pathname]);
 
  return (
   <Carousel

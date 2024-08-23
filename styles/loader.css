@@ -1,6 +1,5 @@
 .loader.container {
  --uib-size: 40px;
- --uib-color: #ffffff;
  --uib-speed: 1.3s;
  --uib-dot-size: 20%;
  position: relative;
@@ -25,7 +24,7 @@
  height: 0%;
  width: 100%;
  padding-bottom: 100%;
- background-color: var(--uib-color);
+ background-color: hsl(var(--primary));
  border-radius: 50%;
  transition: background-color 0.3s ease;
 }

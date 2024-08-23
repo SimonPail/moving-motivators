@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { socket } from "@/socket";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+ notFound,
+ usePathname,
+ useRouter,
+ useSearchParams,
+} from "next/navigation";
 import GameItem from "@/components/game-item";
 import SortableList from "react-easy-sort";
 import { arrayMoveImmutable } from "array-move";
@@ -44,6 +49,8 @@ export default function LivePage() {
    socket.on("items-updated", (newItems: GameItem[]) => {
     setItems(newItems);
    });
+  } else {
+   notFound();
   }
 
   return () => {

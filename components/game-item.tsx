@@ -95,7 +95,7 @@ export default function GameItem({ item }: { item: GameItem }) {
       onClick={() => reinitPos()}
       dragConstraints={{ top: 0, bottom: 0 }}
       onDragEnd={onDragEnd}
-      className="relative cursor-pointer"
+      className="relative cursor-pointer rounded-lg overflow-hidden"
       style={{ y }}
       animate={controls}>
       <div className="top-0 absolute h-full w-full z-30"></div>

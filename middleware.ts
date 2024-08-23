@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, locales } from "./i18n";
 import { Locale } from "./types/locale";
+import { defaultTheme, themes } from "./themes";
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, response: NextResponse) {
  const { pathname } = request.nextUrl;
  const parts = pathname.split("/");
 
@@ -19,8 +20,8 @@ export function middleware(request: NextRequest) {
 
  //[THEME]
  const themeRouter = parts[2] as Theme;
- if (!["it", "engineering"].includes(themeRouter)) {
-  const theme = request.cookies.get("NEXT_THEME")?.value || "it";
+ if (!themes.includes(themeRouter)) {
+  const theme = request.cookies.get("NEXT_THEME")?.value || defaultTheme;
   return NextResponse.redirect(
    new URL(`/${localeRouter}/${theme}${pathname.slice(3)}`, request.url)
   );

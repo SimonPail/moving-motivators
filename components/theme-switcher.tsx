@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { setCookie } from "cookies-next";
 import { useTheme } from "next-themes";
 import { Cog, Computer } from "lucide-react";
+import { ENGINEERING_THEME, IT_THEME } from "@/themes";
 
 export function ThemeSwitcher() {
  const router = useRouter();
@@ -17,13 +18,13 @@ export function ThemeSwitcher() {
   const parts = pathname.split("/");
   const themeRouter = parts[2] as Theme;
   setTheme(themeRouter);
-  setIsChecked(themeRouter === "engineering");
+  setIsChecked(themeRouter === ENGINEERING_THEME);
  }, []);
 
  const toggleTheme = (isChecked: any) => {
   const parts = pathname.split("/");
 
-  const newTheme = isChecked ? "engineering" : "it";
+  const newTheme = isChecked ? ENGINEERING_THEME : IT_THEME;
   setIsChecked(isChecked);
   setTheme(newTheme);
   parts[2] = newTheme;
