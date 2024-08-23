@@ -1,4 +1,4 @@
-name: Deploy 
+name: Deploy
 
 on:
  workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
      uses: actions/setup-node@v4
      with:
       node-version: 20
-      
+
    - name: Checkout code
      uses: actions/checkout@v3
 
@@ -29,23 +29,24 @@ jobs:
      env:
       DEPLOY_KEY: ${{secrets.SSH_PRIVATE_KEY}}
      with:
-      flags: "-avc --exclude=.git --exclude=.gitignore --exclude=.github --update"
-      ssh_options: '-p ${{secrets.SSH_PORT}}'
+      flags: "-avc --delete"
+      options: "--exclude=.git --exclude=.gitignore --exclude=.github --exclude=.en"
+      ssh_options: "-p ${{secrets.SSH_PORT}}"
       src: "./"
       dest: 'extia@"${{secrets.HOST}}":/home/extia/moving-motivators'
 
    - name: Install dependencies and build on VPS
      uses: appleboy/ssh-action@v1.0.3
      with:
-       host: ${{ secrets.HOST }}
-       username: ${{ secrets.USERNAME }}
-       key: ${{ secrets.SSH_PRIVATE_KEY }}
-       port: ${{secrets.SSH_PORT}}
-       script: |
-         export NVM_DIR=~/.nvm
-         source ~/.nvm/nvm.sh
-         nvm use 21.7.1
-         cd moving-motivators
-         npm install 
-         npm run build
-         pm2 restart moving-motivators
+      host: ${{ secrets.HOST }}
+      username: ${{ secrets.USERNAME }}
+      key: ${{ secrets.SSH_PRIVATE_KEY }}
+      port: ${{secrets.SSH_PORT}}
+      script: |
+       export NVM_DIR=~/.nvm
+       source ~/.nvm/nvm.sh
+       nvm use 21.7.1
+       cd moving-motivators
+       npm install 
+       npm run build
+       pm2 restart moving-motivators
