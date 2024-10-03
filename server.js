@@ -21,7 +21,7 @@ app.prepare().then(() => {
   socket.on("create-session", (id) => {
    sessionId = id;
    activeSessions.set(sessionId, []);
-   console.log(`Session created: ${sessionId}`);
+   console.log(`[${new Date().toISOString()}] Session created: ${sessionId}`);
   });
 
   // JOIN SESSION
@@ -32,7 +32,9 @@ app.prepare().then(() => {
     return;
    }
    socket.join(sessionId);
-   console.log(`Client joined session: ${sessionId}`);
+   console.log(
+    `[${new Date().toISOString()}] Client joined session: ${sessionId}`
+   );
 
    const room = io.sockets.adapter.rooms.get(sessionId);
    const userCount = room ? room.size : 0;
@@ -77,7 +79,7 @@ app.prepare().then(() => {
 
   // DISCONECT
   socket.on("disconnect", () => {
-   console.log("Client disconnected");
+   console.log(`[${new Date().toISOString()}] Client disconnected`);
 
    if (sessionId) {
     const room = io.sockets.adapter.rooms.get(sessionId);
